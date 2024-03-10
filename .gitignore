@@ -141,3 +141,12 @@ hs_err_pid*
 replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/devops-23-24-JPE-1231821.iml
+/.idea/encodings.xml
+/.idea/git_toolbox_prj.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
