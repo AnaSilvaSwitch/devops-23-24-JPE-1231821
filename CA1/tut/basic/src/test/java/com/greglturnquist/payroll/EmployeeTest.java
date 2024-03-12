@@ -13,12 +13,14 @@ public class EmployeeTest {
         String description = "job";
         String jobTitle = "Job Title";
         int jobYears = 1;
-        Employee employee = new Employee(firstName, lastName, description, jobTitle, jobYears);
+        String email = "Frodo.Baggins@example.com";
+        Employee employee = new Employee(firstName, lastName, description, jobTitle, jobYears, email);
         assertEquals(firstName, employee.getFirstName());
         assertEquals(lastName, employee.getLastName());
         assertEquals(description, employee.getDescription());
         assertEquals(jobTitle, employee.getJobTitle());
         assertEquals(jobYears, employee.getJobYears());
+        assertEquals(email, employee.getEmail());
     }
 
     @Test
@@ -28,7 +30,8 @@ public class EmployeeTest {
         String description = "ring bearer";
         String jobTitle = "Job Title";
         int jobYears = 1;
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears));
+        String email = "Frodo.Baggins@example.com";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
@@ -38,7 +41,8 @@ public class EmployeeTest {
         String description = "ring bearer";
         String jobTitle = "Job Title";
         int jobYears = 1;
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears));
+        String email = "Frodo.Baggins@example.com";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
@@ -48,7 +52,8 @@ public class EmployeeTest {
         String description = "ring bearer";
         String jobTitle = "";
         int jobYears = 1;
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears));
+        String email = "Frodo.Baggins@example.com";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
     @Test
@@ -58,7 +63,8 @@ public class EmployeeTest {
         String description = "ring bearer";
         String jobTitle = "Job Title";
         int jobYears = -1;
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears));
+        String email = "Frodo.Baggins@example.com";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
 
@@ -69,7 +75,19 @@ public class EmployeeTest {
         String description = null;
         String jobTitle = null;
         int jobYears = 0;
-        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears));
+        String email = "Frodo.Baggins@example.com";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
+    }
+
+    @Test
+    void createEmployee_InvalidEmail() {
+        String firstName = "Frodo";
+        String lastName = "Baggins";
+        String description = "ring bearer";
+        String jobTitle = "Job Title";
+        int jobYears = 1;
+        String email = "";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
 }
