@@ -1,3 +1,16 @@
 
-4
-java:S5786"Remove this 'public' modifier.(ş¨ã—
+h
+java:S1192"FDefine a constant instead of duplicating this literal "Frodo" 4 times.(¶÷ßòùÿÿÿÿ8Ø°ºÒâ1
+e
+java:S1192"HDefine a constant instead of duplicating this literal "Baggins" 4 times.(Éö˜¡8ß°ºÒâ1
+n
+java:S1192"LDefine a constant instead of duplicating this literal "ring bearer" 4 times.(ñÊ³øÿÿÿÿ8ç°ºÒâ1
+l
+java:S1192"JDefine a constant instead of duplicating this literal "Job Title" 4 times.(ÃÈ’ùÿÿÿÿ8ï°ºÒâ1
+o	java:S100
+"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑîÂÓÿÿÿÿÿ8ş°ºÒâ1
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢İÄÿÿÿÿÿ8Š±ºÒâ1
+j	java:S100#"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿ¹ø˜8‘±ºÒâ1
+j	java:S100-"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…è†Ä8•±ºÒâ1
+o	java:S1007"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥ŸÖìøÿÿÿÿ8›±ºÒâ1
+j	java:S100B"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è­í¨8¡±ºÒâ1

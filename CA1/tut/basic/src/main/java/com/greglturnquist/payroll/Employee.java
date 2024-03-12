@@ -34,6 +34,7 @@ public class Employee {
 	private String description;
 	private String jobTitle;
 	private int jobYears;
+	private String email;
 
 	public Employee() {}
 
@@ -46,6 +47,7 @@ public class Employee {
 		this.description = description;
 		this.jobTitle = jobTitle;
 		this.jobYears = jobYears;
+		this.email = firstName + "." + lastName + "@example.com";
 	}
 
 	public boolean validateArguments(String firstName, String lastName, String description, String jobTitle, int jobYears) {
