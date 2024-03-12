@@ -34158,19 +34158,7 @@ var EmployeeList = /*#__PURE__*/function (_React$Component2) {
           employee: employee
         });
       });
-      return /*#__PURE__*/React.createElement("div", {
-        style: {
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minHeight: '100vh'
-        }
-      }, " ", /*#__PURE__*/React.createElement("table", {
-        style: {
-          borderCollapse: 'collapse',
-          border: '3px double #999'
-        }
-      }, " ", /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "First Name"), /*#__PURE__*/React.createElement("th", null, "Last Name"), /*#__PURE__*/React.createElement("th", null, "Description"), /*#__PURE__*/React.createElement("th", null, "Job Years"), /*#__PURE__*/React.createElement("th", null, "Job Title")), employees)));
+      return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "First Name"), /*#__PURE__*/React.createElement("th", null, "Last Name"), /*#__PURE__*/React.createElement("th", null, "Description")), employees));
     }
   }]);
   return EmployeeList;
@@ -34185,7 +34173,7 @@ var Employee = /*#__PURE__*/function (_React$Component3) {
   _createClass(Employee, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.employee.firstName), /*#__PURE__*/React.createElement("td", null, this.props.employee.lastName), /*#__PURE__*/React.createElement("td", null, this.props.employee.description), /*#__PURE__*/React.createElement("td", null, this.props.employee.jobYears), /*#__PURE__*/React.createElement("td", null, this.props.employee.jobTitle));
+      return /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.employee.firstName), /*#__PURE__*/React.createElement("td", null, this.props.employee.lastName), /*#__PURE__*/React.createElement("td", null, this.props.employee.description));
     }
   }]);
   return Employee;
