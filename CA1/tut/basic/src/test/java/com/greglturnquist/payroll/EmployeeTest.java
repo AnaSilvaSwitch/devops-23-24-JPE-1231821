@@ -90,4 +90,15 @@ public class EmployeeTest {
         assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
+    @Test
+    void createEmployee_InvalidEmailWithout() {
+        String firstName = "Frodo";
+        String lastName = "Baggins";
+        String description = "ring bearer";
+        String jobTitle = "Job Title";
+        int jobYears = 1;
+        String email = "Frodo.Baggins.example.com";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
+    }
+
 }
