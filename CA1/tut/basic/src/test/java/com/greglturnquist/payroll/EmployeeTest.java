@@ -2,8 +2,7 @@ package com.greglturnquist.payroll;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EmployeeTest {
     @Test
@@ -87,6 +86,18 @@ public class EmployeeTest {
         String jobTitle = "Job Title";
         int jobYears = 1;
         String email = "";
+        assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
+    }
+
+    //test if email has @
+    @Test
+    void createEmployee_InvalidEmailWithout() {
+        String firstName = "Frodo";
+        String lastName = "Baggins";
+        String description = "ring bearer";
+        String jobTitle = "Job Title";
+        int jobYears = 1;
+        String email = "Frodo.Baggins.example.com";
         assertThrows(IllegalArgumentException.class, () -> new Employee(firstName, lastName, description, jobTitle, jobYears, email));
     }
 
