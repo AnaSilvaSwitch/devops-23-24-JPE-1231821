@@ -35,16 +35,21 @@ class EmployeeList extends React.Component{
 			<Employee key={employee._links.self.href} employee={employee}/>
 		);
 		return (
-			<table>
-				<tbody>
+			<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}> {/* Centralizes content horizontally */}
+				<table style={{ borderCollapse: 'collapse', border: '3px double #999' }}> {/* Sets table border to double */}
+					<tbody>
 					<tr>
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Description</th>
+						<th>Job Years</th>
+						<th>Job Title</th>
+						<th>email</th>
 					</tr>
 					{employees}
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
 		)
 	}
 }
@@ -58,6 +63,9 @@ class Employee extends React.Component{
 				<td>{this.props.employee.firstName}</td>
 				<td>{this.props.employee.lastName}</td>
 				<td>{this.props.employee.description}</td>
+				<td>{this.props.employee.jobYears}</td>
+				<td>{this.props.employee.jobTitle}</td>
+				<td>{this.props.employee.email}</td>
 			</tr>
 		)
 	}
