@@ -34,7 +34,7 @@ To implement the initial setup and a new feature directly on the master branch.
 
    ``` 
 
-   - adds a ".git" directory to the current directory (the added directory contains alal the information required for the repository work process)
+   - this command initializes a new Git repository in the current directory, creating a .git directory to manage version control.
 
 
 
@@ -59,6 +59,7 @@ To implement the initial setup and a new feature directly on the master branch.
    git add . 
 
    ``` 
+   - this creates a new directory named CA1 and stages the change.
 
 
 4. Cloning and adding tut-react-and-spring-data-rest:
@@ -72,6 +73,7 @@ To implement the initial setup and a new feature directly on the master branch.
    git add . 
 
    ``` 
+   - clones the repository from the specified URL and stages the cloned files
 
 
 
@@ -82,6 +84,8 @@ To implement the initial setup and a new feature directly on the master branch.
    mv tut-react-and-spring-data-rest . /CA1 
 
    ``` 
+   -moves the cloned repository into the CA1 folder and stages the move
+<br><br>
 
 6. Create repository at GitHub.com with name *“devops-23-24-JPE-1231821”*
 
@@ -97,6 +101,7 @@ To implement the initial setup and a new feature directly on the master branch.
 
       git add .
    ``` 
+   - adds the remote repository to the local repository and stages the changes to be committed and pushed to the remote repository.
 
   
 
@@ -116,9 +121,10 @@ To implement the initial setup and a new feature directly on the master branch.
 
    ```bash 
 
-   git push -u origin master 
+   git push -u origin main
 
    ``` 
+   - pushes the changes in the local repository to the remote repository, setting the remote repository as the default upstream for the current branch (main).
 
 
 
@@ -161,6 +167,7 @@ To implement the initial setup and a new feature directly on the master branch.
    git commit -m " Add a new fields to the application and tests.”  
 
    ```
+   - adds the changes to the staging area, tags the version, pushes the changes to the remote repository, and commits the changes with a descriptive message.
 
  
 3. Tag the version for part 1 and push, and then mark the assignment completion: 
@@ -172,6 +179,7 @@ To implement the initial setup and a new feature directly on the master branch.
    git push origin ca1-part1 
 
    ``` 
+   - creates a tag named 'ca1-part1' and pushes it to the remote repository
 
 <br><br>
 ## Part 2: Using Branches for Development
@@ -189,7 +197,7 @@ To use branches for developing new features and fixing bugs, with the master bra
 
 1. Create issues in the remote repository to be further resolved during the Assignment
 
-   - after creating the issues, you can associate them with specific project branches (to be created)
+   - after creating the issues, associate them with specific project branches
 
    - in the merging processes, the remote repository will look for indications in the commit messages of the merged branches that these commits have fixes issues #X.
 
@@ -218,6 +226,7 @@ To use branches for developing new features and fixing bugs, with the master bra
    git push origin email-field 
 
    ``` 
+   - adds the changes to the staging area, commits the changes with a descriptive message, and pushes the branch to the remote repository
 
 
 
@@ -238,6 +247,7 @@ To use branches for developing new features and fixing bugs, with the master bra
    git push origin main
 
    ``` 
+    - adds the changes to the staging area, commits the changes with a descriptive message, and pushes the branch to the remote repository
 
 
 
@@ -267,7 +277,6 @@ To use branches for developing new features and fixing bugs, with the master bra
 
    - This is useful for preserving the history of a feature branch before it gets integrated into the main branch, making it easier to understand the flow of changes and to revert entire features if needed.
 
-   - As always, every major step should be followed by a tag creation and pushing to origin of such tag
 
 
 <br><br>
@@ -344,7 +353,8 @@ To use branches for developing new features and fixing bugs, with the master bra
    touch README.md 
 
    ``` 
-
+<br><br>
+<br><br>
 
 
 ## Analysis of an Alternative Version Control Solution: Mercurial SCM
