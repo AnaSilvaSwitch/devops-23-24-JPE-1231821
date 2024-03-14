@@ -242,12 +242,13 @@ To use branches for developing new features and fixing bugs, with the master bra
    
    git checkout main
    
-   git merge email-field
+   git merge -no -ff email-field
    
    git push origin main
 
    ``` 
     - adds the changes to the staging area, commits the changes with a descriptive message, and pushes the branch to the remote repository
+    - in this work only the command git merge email-field was used, but it is possible to use the command git merge --no-ff email-field to avoid fast-forward merges, which can make the history of the project clearer and easier to understand.
 
 
 
@@ -301,7 +302,7 @@ To use branches for developing new features and fixing bugs, with the master bra
 
    git add . 
 
-   git commit -m "[FEAT] #6 Created branch fix-invalid-email" 
+   git commit -m "[FEAT] #6 #7 Created branch fix-invalid-email and made the fixes and tests " 
 
    git push origin fix-invalid-email 
 
@@ -314,7 +315,7 @@ To use branches for developing new features and fixing bugs, with the master bra
 
    git checkout main 
 
-   git merge fix-invalid-email 
+   git merge -no -ff fix-invalid-email 
 
    git push origin main 
 
@@ -323,6 +324,8 @@ To use branches for developing new features and fixing bugs, with the master bra
    git push origin v1.3.1 
 
    ``` 
+   - in this work only the command git merge fix-invalid-email was used, but it should be used the command git merge --no-ff fix-invalid-email to avoid fast-forward merges, which can make the history of the project clearer and easier to understand.
+<br><br>
 6. Merge the feature branch into master and tag the new version:
 
    ```bash 
@@ -343,9 +346,8 @@ To use branches for developing new features and fixing bugs, with the master bra
    git push origin ca1-part2 
 
    ``` 
-<br><br>
-#### Add README.md
 
+#### Add README.md
 
 
    ```bash 
@@ -353,7 +355,19 @@ To use branches for developing new features and fixing bugs, with the master bra
    touch README.md 
 
    ``` 
-<br><br>
+#### Add .gitignore
+
+   -Open the URL https://www.toptal.com/developers/gitignore and select the options for the project, in this case, Java.
+
+
+   ```bash 
+
+   touch .gitignore
+   nano .gitignore
+
+   ``` 
+   - Change the nano file to the .gitignore and paste the content from the website.
+
 <br><br>
 
 
@@ -430,6 +444,312 @@ Mercurial: **hg log** - Displays the revision history of the repository.
 Git: **git tag <tag_name>** - Creates a tag for a specific commit.<p>
 Mercurial: **hg tag <tag_name>** - Similar to Git, creates a tag for a specific revision.
 
+# Implement the assignment in Mercurial
+
+
+
+## Introduction
+
+
+## Part 1
+
+
+
+To implement the initial setup and a new feature directly on the master branch.
+
+
+
+### Implementation Steps
+
+
+
+#### Setup and Initial Commit
+
+
+
+1. Initialize the Git repository:
+
+   ```bash 
+
+   hg init 
+
+   ``` 
+
+2. Add all files to the staging area:
+
+   ```bash 
+
+   hg add . 
+
+   ``` 
+
+3. Create folder CA1:
+
+   ```bash 
+
+   mk dir CA1 
+   
+   hg add . 
+
+   ``` 
+ 
+4. Cloning and adding tut-react-and-spring-data-rest:
+
+   - before we need to change to the folder/directory where our local repository is located.
+
+   ```bash 
+
+   hg clone git@github.com:spring-guides/tut-react-and-spring-data-rest.git 
+
+   hg add . 
+
+   ``` 
+ 
+5. Move the application into the new CA1 folder:
+
+   ```bash 
+
+   mv tut-react-and-spring-data-rest . /CA1 
+
+   ``` 
+   -moves the cloned repository into the CA1 folder and stages the move
+   <br><br>
+
+6. Create repository at GitHub.com with name *“devops-23-24-JPE-1231821”*
+
+
+7. Commit the added files:
+
+   ```bash 
+
+   hg commit -m "[INIT] #1 Initial commit and move tut int CA1 folder" 
+
+   ``` 
+
+8. Push the commit to the remote repository:
+
+   ```bash 
+
+   hg push -u origin main
+
+   ``` 
+9. Tag the initial version of the application as `v1.1.0` and push the tag to the remote repository:
+
+      ```bash 
+
+      git tag v1.1.0 
+
+      git push origin v1.1.0 
+
+      ``` 
+
+<br><br>
+
+#### New Feature – Job Title and Job Years and Completion
+
+
+
+1. Creation of Issues
+
+   - In the remote repository, issues should be created for this new feature.
+
+
+
+2. After implementing the feature and tests, tag the version, add the changes and then commit:
+
+   ```bash 
+
+   hg add . 
+
+   hg tag v1.2.0  
+
+   hg push 
+
+   hg push origin v1.2.0 
+
+   hg commit -m " Add a new fields to the application and tests.”  
+
+   ```
+ 
+
+3. Tag the version for part 1 and push, and then mark the assignment completion:
+
+   ```bash 
+
+   hg tag ca1-part1 
+
+   hg push origin ca1-part1 
+
+   ``` 
+ 
+<br><br>
+## Part 2: Using Branches for Development
+
+
+
+To use branches for developing new features and fixing bugs, with the master branch serving as the stable version base.
+
+
+
+### Implementation Steps
+
+
+#### Feature Development - Email Field
+
+1. Create issues in the remote repository to be further resolved during the Assignment
+
+   - after creating the issues, associate them with specific project branches
+
+
+
+2. Create and switch to the `email-field` branch:
+
+   ```bash 
+
+   hg checkout -b email-field 
+
+   ``` 
+
+
+3. After implementing the feature and conducting tests, add and commit the changes, then push the branch:
+
+   ```bash 
+
+   hg add . 
+
+   hg commit -m [FEAT] #4 Created branch email-field and added private Email field in the Employee class" 
+
+   hg push origin email-field 
+
+   ``` 
+ 
+4. Finish the implementations in Employee class and update tests
+
+   ```bash 
+
+   hg add . 
+
+   hg commit -m [FEAT] #5 Added support for the email field with tests” 
+
+   hg push origin email-field 
+   
+   hg checkout main
+   
+   hg merge email-field
+   
+   hg push origin main
+
+    ``` 
+   
+5. To debug
+
+   ```bash 
+
+   cd tut/basic 
+
+   ./mvnw spring-boot:run
+
+   ``` 
+
+- visit http://localhost:8080/
+
+
+
+6. Merge the feature branch into master and tag the new version:
+
+   ```bash 
+
+   hg tag v1.3.0 
+
+   hg push origin v1.3.0 
+
+   ```
+
+ 
+<br><br>
+#### Bug Fix - Valid Email Check
+
+
+
+1. Create the issues regarding this chapter
+
+2. Create and switch to the `fix-invalid-email` branch:
+
+   ```bash 
+
+   hg checkout -b fix-invalid-email 
+
+   ``` 
+
+
+3. After implementing the feature, push the branch:
+
+   ```bash 
+
+   hg add . 
+
+   hg commit -m "[FEAT] #6 Created branch fix-invalid-email" 
+
+   hg push origin fix-invalid-email 
+
+   ``` 
+
+
+5. Merge the bug fix into master and tag:
+
+   ```bash 
+
+   hg checkout main 
+
+   hg merge fix-invalid-email 
+
+   hg push origin main 
+
+   hg tag v1.3.1   
+
+   hg push origin v1.3.1 
+
+   ``` 
+
+6. Merge the feature branch into master and tag the new version:
+
+   ```bash 
+
+   hg tag v1.3.1   
+
+   hg push origin v1.3.1
+
+   ```
+
+
+7. Mark the completion of part 2 and final tag:
+
+   ```bash 
+
+   hg tag ca1-part2 
+
+   hg push origin ca1-part2 
+
+   ``` 
+
+#### Add README.md
+
+
+   ```bash 
+
+   touch README.md 
+
+   ``` 
+#### Add .hgignore
+
+   ```bash 
+
+   touch .hgignore
+   nano .hgignore
+
+   ``` 
+
+
 ### Sources:
 
 Git SCM - https://git-scm.com/ <p>
@@ -438,6 +758,7 @@ Atlassian Git Tutorial - https://www.atlassian.com/git/tutorials <p>
 A Gentle Introduction to Mercurial - https://wiki.mercurial-scm.org/QuickStart
 
 <br><br>
+
 
 ## Notes
 
