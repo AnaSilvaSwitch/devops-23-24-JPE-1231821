@@ -45,8 +45,6 @@ jar {
     }
 }
 
-
-
 task runClient(type:JavaExec, dependsOn: classes){
     group = "DevOps"
     description = "Launches a chat client that connects to a server on localhost:59001 "
