@@ -27,23 +27,20 @@
   ```bash
    ./gradlew build
   ```
-![gradleBuild.png](..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FImagens%20para%20apagar%2FgradleBuild.png)
-5. Run the server
+
+   * Run the server
   ```bash
    java -cp build/libs/basic_demo-0.1.0.jar basic_demo.ChatServerApp <server port>
    ```
 
-6. Open another terminal and run the client
+   *. Open another terminal and run the client
   ```bash
    ./gradlew runClient
    ```
-   ![runClient.png](..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FImagens%20para%20apagar%2FrunClient.png)
+   * Open another terminal and run the client again
 
-7. Open another terminal and run the client again
-   ![runServer.png](..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FImagens%20para%20apagar%2FrunServer.png)
+   * Open chatter and chat between clients
 
-
-8. Open chatter and chat between clients
 
 ## Task 2: Execute the Server
 
@@ -66,7 +63,7 @@ task runServer(type:JavaExec, dependsOn: classes){
 }
 ```
 
-3. Execute the server using the following command
+3. Execute the server
 ```bash
 ./gradlew runServer
 ```
@@ -102,7 +99,6 @@ public class AppTest {
 }
   ```
 
-
 3. **Add JUnit Dependency**:
    Ensure JUnit 4.12 is added to `build.gradle` for the test to run
   ```java
@@ -115,6 +111,7 @@ public class AppTest {
   ```bash
   ./gradlew test
   ```
+
 5. **Commit the Changes**
   ```bash
   git add .
@@ -125,8 +122,7 @@ public class AppTest {
 ## Task 4: Backup of Sources
 
 1. Create an Issue for this task
-2. Create a task in the `build.gradle` file to backup source files to a `backup` directory:
-
+2. Create a task in the `build.gradle` file to backup source files to a `backup` directory
 
 ```groovy
 task backupSource(type: Copy) {
@@ -181,7 +177,7 @@ git push
 ## Finalizing the Assignment
 
 1. **Add and fill README.md**:
-Fill README.md file to reflect all the steps described above.
+In the folder `CA2/Part1` create a file named `README.md` and add the content described above
 
   ```bash
 touch README.md
@@ -189,8 +185,6 @@ git add .
 git commit -m "#11 Create README file to Part1 of CA2"
 git push
   ```
-![readme.png](..%2F..%2F..%2F..%2F..%2F..%2FDesktop%2FImagens%20para%20apagar%2Freadme.png)
-
 
 ## Conclusion
 
