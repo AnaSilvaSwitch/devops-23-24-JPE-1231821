@@ -1,4 +1,4 @@
-# Class assignment 2
+# Class assignment 2 - Part 1
    This is the technical report for the Class Assignment 2 (CA2) - Part 1. It covers the implementation of build tools using Gradle, including the execution of a server, unit testing, and file management tasks.
 
 
@@ -8,7 +8,6 @@
   ```bash
    mkdir CA2/Part1
   ```
-
 
 2. Clone repository to your local machine
   ```bash
