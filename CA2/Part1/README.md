@@ -2,6 +2,17 @@
    This is the technical report for the Class Assignment 2 (CA2) - Part 1. It covers the implementation of build tools using Gradle, including the execution of a server, unit testing, and file management tasks.
 
 
+## Table of Contents
+
+- [Task 1: Build Tools with Gradle](#task-1-build-tools-with-gradle)
+- [Task 2: Execute the Server](#task-2-execute-the-server)
+- [Task 3: Simple Unit Test](#task-3-simple-unit-test)
+- [Task 4: Backup of Sources](#task-4-backup-of-sources)
+- [Task 5: Archive of Sources](#task-5-archive-of-sources)
+- [Finalizing the Assignment](#Finalizing-the-Assignment)
+- [Conclusion](#Conclusion)
+
+
 ## Task 1: Build Tools with Gradle
 
 1. Create folder `CA2` in your repository
