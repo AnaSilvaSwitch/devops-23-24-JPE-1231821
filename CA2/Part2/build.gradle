@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.Copy
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
@@ -31,6 +33,18 @@ tasks.named('test') {
 frontend {
 	nodeVersion ="16.20.2"
 	assembleScript ="run build"
-	cleanScript ="runclean"
-	checkScript ="runcheck"
+	cleanScript ="run clean"
+	checkScript ="run check"
 	}
+
+task copyJarToDist(type: Copy) {
+	dependsOn build
+	from('build/libs')
+	into('dist')
+	include('*.jar')
+	doFirst {
+		// This will ensure the dist directory is created if it doesn't exist
+		file('dist').mkdirs()
+	}
+}
+
