@@ -150,3 +150,11 @@ replay_pid*
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+/CA2/Part2/node/
+/CA2/Part2/node_modules/
