@@ -1,0 +1,351 @@
+# Technical Report for CA2 Part 2: Build Tools with Gradle
+
+## Table of Contents
+
+- [1. Setup](#1-setup)
+- [2. Frontend Integration](#2-frontend-integration)
+- [3. Building and Running the Application](#3-building-and-running-the-application)
+- [4. Additional Gradle Tasks for Project Management](#4-additional-gradle-tasks-for-project-management)
+- [5. Finalizing the Assignment](#5-finalizing-the-assignment)
+- [6. Conclusion](#6-Conclusion)
+- [7. Alternative Solution Analysis](#7-Alternative-Solution-Analysis)
+
+
+## Introduction
+
+This report details the migration of a Spring Boot application from Maven-based build automation to Gradle. It explores the challenges, solutions, and key takeaways from this process, highlighting Gradle's strengths in managing complex project structures.
+
+## 1.  Setup
+
+### 1.1 Creating and Configuring the Gradle Project
+
+#### 1.1.1 Create a New Branch
+To isolate changes, create a new branch titled `tut-basic-gradle` and switch to it.
+  ```bash
+  git branch tut-basic-gradle
+  git checkout -b tut-basic-gradle
+  ```
+
+#### 1.1.2 Initialize the Project with Spring Initializr
+Spring Initializr (https://start.spring.io) was used to generate a new Gradle project with dependencies mirroring the Maven project's environment (Rest Repositories, Thymeleaf, JPA, H2).
+
+  * Fill the necessary information based on the instructions of the CA2 document.
+  * Click on the "Generate" button and download the project. Extract the files to the CA2 Part2 folder.
+
+
+### 1.2 Adapt the Project
+The original `src` directory was removed to pave the way for integrating the Maven project's source code. This approach ensures that the application logic and structure remain consistent across the migration.
+
+* Open the project in IntelliJ and delete de `src` folder.
+* Copy the `src` folder from Class Assignment 1 Part 1 to the project folder.
+* Copy the `webpack.config.js` and the `package.json` files from Class Assignment 1 Part 1 to the project folder.
+  ```bash
+    cp webpack.config.js destination/directory
+    cp package.json destination/directory
+  ```
+* Delete the `src/main/resources/static/built/` folder.
+
+  ```bash
+    rm -rf src/main/resources/static/built/
+  ```
+* In the **Employee.java** class, change all *javax.persistence* imports to *jakarta.persistence*.
+
+
+## 2. Frontend Integration
+
+###  2.1. Adopt the `org.siouan.frontend-gradle-plugin`:
+for seamless integration of frontend build processes within the Gradle workflow, mimicking the functionality provided by Maven's frontend plugin.
+
+  ```gradle
+   id "org.siouan.frontend-jdk17" version "8.0.0"
+  ```
+  
+### 2.2. Configure the plugin in the same build.gradle file
+  ```gradle
+  frontend {
+  nodeVersion = "16.20.2"
+  assembleScript = "run build"
+  cleanScript = "run clean"
+  checkScript = "run check"
+  }
+  ```
+
+### 2.3. Add the dependencies in the build.gradle file
+  ```gradle
+  "scripts": {
+  "webpack": "webpack",
+  "build": "npm run webpack",
+  "check": "echo Checking frontend",
+  "clean": "echo Cleaning frontend",
+  "lint": "echo Linting frontend",
+  "test": "echo Testing frontend"
+  },
+  ```
+
+* Add the package manager to the build.gradle file, before the scripts section:
+  ```gradle
+  "packageManager": "npm@9.6.7",
+  ```
+
+### 3.  Building and Running the Application
+
+### 3.1. Executing the Build with Gradle
+Running `./gradlew build` compiled both the Java and JavaScript codebases, signifying a successful integration of frontend tasks within the Gradle project.
+
+### 3.2. Launching the Application
+`./gradlew bootRun` was executed to verify the application's functionality post-migration, with particular attention to the intactness of the frontend after the build process.
+
+## 4. Additional Gradle Tasks for Project Management
+
+### 4.1. Copy the generated jar file to the target directory
+- In the `build.gradle` file, add the following task to copy the generated jar file to the `dist` directory.
+    ```grovy
+    task copyJarToDist(type: Copy) {
+	      dependsOn build
+	      from('build/libs')
+	      into('dist')
+	      include('*.jar')
+	      doFirst {
+		      // This will ensure the dist directory is created if it doesn't exist
+		        file('dist').mkdirs() 
+  } 
+    ```
+- Compile the project in the terminal, add the files and commit the changes.
+  ```bash
+  ./gradlew build
+  git add .
+  git commit -m "#17 Added task to copy the jar file"
+  ```
+
+#### 4.2. Cleaning Up Webpack Artifacts
+- In the `build.gradle` file, add the following task to clean up the Webpack artifacts before the project’s clean task.
+
+    ```groovy
+    task cleanWebpack(type: Delete) {
+        delete 'src/main/resources/static/built/'
+    }
+
+    clean.dependsOn cleanWebpack
+    ```
+
+- Compile the project in the terminal, add the files and commit the changes.
+  ```bash
+  ./gradlew build
+  git add .
+  git commit -m "#18 Deleted the files generated by webpack"
+  ```
+
+## 5. Finalizing the Assignment
+
+### 5.1. Committing, Merging
+Changes were committed to the `tut-basic-gradle` branch and merged into the main branch.
+
+  ```bash
+  git checkout main
+  git merge --no-ff tut-basic-gradle
+  git push origin main
+  ````
+
+### 5.2. Documenting and tagging
+A technical report was compiled describing the steps above in the `readme.md` file within the `CA2/Part2/` directory. The repository was then tagged with `ca2-part2` to mark the milestone.
+
+  ```bash
+  git checkout tut-basic-gradle
+  touch README.md
+  git add README.md
+  git commit -m "#19 Added Readme file to CA2 - Part2"
+  git tag ca2-part2
+  git checkout main
+  git merge --no-ff tut-basic-gradle
+  git push origin main
+  ```
+
+## 6. Conclusion
+
+The migration from Maven to Gradle for our Spring Boot application has been a success, showcasing Gradle's adaptability and robustness in managing project complexities. Gradle's flexible DSL, seamless frontend integration, and efficient dependency management have streamlined our build processes significantly. The incremental builds feature has notably reduced build times, enhancing development productivity. Documentation and version control practices ensure clarity and collaboration within the team. This migration not only modernizes our build automation but also sets a solid foundation for future scalability and development efficiency.
+
+## 7. Alternative Solution Analysis
+
+## Maven as the Alternative Tool
+
+### Implementing the Maven Project
+
+The alternative solution for CA2 Part 2 was developed using Maven, a widely used build automation tool. Here’s a detailed step-by-step guide on how Maven can replicate the tasks implemented in Gradle for the Spring Boot application, focusing on the same key areas: project initialization, frontend integration, packaging, and cleanup.
+
+#### Project Initialization with Maven
+- **Spring Initializr:** Similar to the Gradle approach, we used https://start.spring.io but selected Maven as the build tool. The project was initialized with the same dependencies: Spring Web, Thymeleaf, Spring Data JPA, and H2 Database.
+- **POM.xml Configuration:** The generated `pom.xml` file serves as Maven’s build configuration file, analogous to Gradle’s `build.gradle`. Dependencies and plugins were declared here.
+
+#### Configure Maven Frontend Plugin
+Add the frontend-maven-plugin to your POM.xml for frontend integration.
+
+    ```xml
+    <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>1.9.1</version>
+        <configuration>
+            <nodeVersion>v16.13.0</nodeVersion>
+            <npmVersion>6.14.8</npmVersion>
+        </configuration>
+        <executions>
+            <execution>
+                <goals>
+                    <goal>install-node-and-npm</goal>
+                    <goal>npm</goal>
+                </goals>
+            </execution>
+        </executions>
+    </plugin>
+    ```
+
+```xml
+  <plugin>
+    <groupId>com.github.eirslett</groupId>
+    <artifactId>frontend-maven-plugin</artifactId>
+    <version>1.12.0</version>
+    <executions>
+        <execution>
+            <id>install node and npm</id>
+            <goals>
+                <goal>install-node-and-npm</goal>
+            </goals>
+            <configuration>
+                <nodeVersion>v16.20.2</nodeVersion>
+                <npmVersion>9.6.7</npmVersion>
+            </configuration>
+        </execution>
+        <execution>
+            <id>npm install</id>
+            <goals>
+                <goal>npm</goal>
+            </goals>
+            <configuration>
+                <arguments>install</arguments>
+            </configuration>
+        </execution>
+        <execution>
+            <id>npm run build</id>
+            <goals>
+                <goal>npm</goal>
+            </goals>
+            <configuration>
+                <arguments>run build</arguments>
+            </configuration>
+        </execution>
+    </executions>
+  </plugin>
+  ```
+
+- **Webpack and `package.json`:** The same `package.json` configurations were applied to facilitate npm scripts for building and cleaning the frontend.
+#### Build with Maven
+  - Run `mvn clean install` to build both the Java and frontend assets.
+
+      ```bash
+      mvn clean install
+    ```
+
+
+#### Launch the Application
+- Run your Spring Boot application using Maven:
+
+  ```bash
+  mvn spring-boot:run
+  ```
+
+#### Copy the generated jar file to the target directory
+- Add the Maven copy-resources plugin to copy the JAR file to the dist directory.
+
+  ```xml
+    <plugin>
+      <artifactId>maven-resources-plugin</artifactId>
+      <executions>
+          <execution>
+              <id>copy-resources</id>
+              <phase>install</phase>
+              <goals>
+                  <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                  <outputDirectory>${project.build.directory}/dist</outputDirectory>
+                  <resources>
+                      <resource>
+                          <directory>${project.build.directory}</directory>
+                          <includes>
+                              <include>*.jar</include>
+                          </includes>
+                      </resource>
+                  </resources>
+              </configuration>
+          </execution>
+      </executions>
+  </plugin>
+  ```
+  
+#### Clean Up Frontend Assets
+- Use Maven to clean frontend assets before the project clean task.
+
+  ```xml
+    <plugin>
+    <artifactId>maven-clean-plugin</artifactId>
+    <executions>
+      <execution>
+        <id>clean-webpack</id>
+        <phase>clean</phase>
+        <goals>
+          <goal>clean</goal>
+        </goals>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>src/main/resources/static/built/</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+  ```
+
+
+### Comparison: Maven vs. Gradle
+
+The comparison between Maven and Gradle solutions for the Spring Boot application build automation highlights several differences and similarities:
+
+
+#### 1. Build Script Language:
+
+*Maven*: Maven uses XML for its build scripts (POM files), which can be verbose and less expressive compared to other languages.
+
+*Gradle*: Gradle uses Groovy or Kotlin DSL, offering a more concise and expressive syntax for build scripts. This allows for greater flexibility and ease of customization.
+
+#### 2. Dependency Management:
+
+Maven: Maven has a centralized approach to dependency management, relying on a single POM file to define project dependencies. It uses repositories like Maven Central to download dependencies.
+
+Gradle: Gradle offers more flexibility in dependency management, supporting Maven repositories as well as Ivy and custom repositories. Gradle's dependency resolution is more efficient due to its ability to download dependencies in parallel.
+
+#### 3. Plugin Ecosystem:
+
+*Maven*: Maven has a rich ecosystem of plugins, providing a wide range of functionalities for building, testing, packaging, and more. However, plugin configurations can sometimes be rigid.
+
+*Gradle*: Gradle also has a robust plugin ecosystem with plugins available for various tasks. The flexibility of Gradle's build scripts extends to plugin configurations, allowing for more customized build workflows.
+
+#### 4. Performance:
+
+*Maven*: Maven's build performance can suffer in large projects due to its lack of incremental builds. It often rebuilds entire modules even for small changes.
+
+*Gradle*: Gradle's incremental build feature is a significant performance advantage. It only rebuilds parts of the project that have changed, resulting in faster build times, especially in complex projects.
+
+#### 5. Community Adoption and Trends:
+
+*Maven*: Maven has been a staple in the Java community for a long time and is widely adopted across many projects and organizations.
+
+*Gradle*: Gradle has gained popularity in recent years due to its modern approach to build automation. It is particularly favored for Android development and is increasingly used in enterprise Java projects.
+
+
+### Conclusion
+
+Both Maven and Gradle are capable of fulfilling the project requirements for CA2 Part 2, each with its own set of advantages. Maven’s structured and phase-driven approach offers predictability and a vast plugin repository, making it a solid choice for traditional Java projects. Gradle, with its flexible configuration and performance optimizations, excels in handling complex builds and multi-project setups. The choice between Maven and Gradle ultimately depends on the project’s specific needs, team familiarity, and performance considerations.
+Migrating to Gradle from Maven offered an enriching learning experience, underscoring Gradle’s robustness and versatility in handling multi-faceted Java projects. This exercise not only demonstrated Gradle’s capacity for backend and frontend integration but also its adaptability to various development scenarios, making it an invaluable tool in the DevOps toolkit. The exploration of an alternative build tool further enriched this learning journey, providing a holistic view of build automation's role in streamlining development workflows.
