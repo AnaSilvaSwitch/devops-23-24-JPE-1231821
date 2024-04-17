@@ -173,8 +173,8 @@ The migration from Maven to Gradle for our Spring Boot application has been a su
 The alternative solution for CA2 Part 2 was developed using Maven, a widely used build automation tool. Here’s a detailed step-by-step guide on how Maven can replicate the tasks implemented in Gradle for the Spring Boot application, focusing on the same key areas: project initialization, frontend integration, packaging, and cleanup.
 
 #### Project Initialization with Maven
-- **Spring Initializr:** Similar to the Gradle approach, we used https://start.spring.io but selected Maven as the build tool. The project was initialized with the same dependencies: Spring Web, Thymeleaf, Spring Data JPA, and H2 Database.
-- **POM.xml Configuration:** The generated `pom.xml` file serves as Maven’s build configuration file, analogous to Gradle’s `build.gradle`. Dependencies and plugins were declared here.
+- **Spring Initializr:** Similar to the Gradle, we used https://start.spring.io and selected Maven as the build tool. The project was initialized with the same dependencies: Spring Web, Thymeleaf, Spring Data JPA, and H2 Database.
+- **POM.xml Configuration:** The generated `pom.xml` file serves as Maven’s build configuration file and was extracted to the project.
 
 #### Configure Maven Frontend Plugin
 Add the frontend-maven-plugin to your POM.xml for frontend integration.
