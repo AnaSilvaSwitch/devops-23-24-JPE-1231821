@@ -179,72 +179,101 @@ The alternative solution for CA2 Part 2 was developed using Maven, a widely used
 #### Configure Maven Frontend Plugin
 Add the frontend-maven-plugin to your POM.xml for frontend integration.
 
-    ```xml
-    <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <version>1.9.1</version>
-        <configuration>
-            <nodeVersion>v16.13.0</nodeVersion>
-            <npmVersion>6.14.8</npmVersion>
-        </configuration>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>install-node-and-npm</goal>
-                    <goal>npm</goal>
-                </goals>
-            </execution>
-        </executions>
-    </plugin>
-    ```
-
-```xml
+  ```xml
   <plugin>
-    <groupId>com.github.eirslett</groupId>
-    <artifactId>frontend-maven-plugin</artifactId>
-    <version>1.12.0</version>
-    <executions>
-        <execution>
-            <id>install node and npm</id>
-            <goals>
-                <goal>install-node-and-npm</goal>
-            </goals>
-            <configuration>
-                <nodeVersion>v16.20.2</nodeVersion>
-                <npmVersion>9.6.7</npmVersion>
-            </configuration>
-        </execution>
-        <execution>
-            <id>npm install</id>
-            <goals>
-                <goal>npm</goal>
-            </goals>
-            <configuration>
-                <arguments>install</arguments>
-            </configuration>
-        </execution>
-        <execution>
-            <id>npm run build</id>
-            <goals>
-                <goal>npm</goal>
-            </goals>
-            <configuration>
-                <arguments>run build</arguments>
-            </configuration>
-        </execution>
-    </executions>
+      <groupId>com.github.eirslett</groupId>
+      <artifactId>frontend-maven-plugin</artifactId>
+      <version>1.9.1</version>
+      <configuration>
+          <installDirectory>target</installDirectory>
+      </configuration>
+      <executions>
+          <execution>
+              <id>install node and npm</id>
+              <goals>
+                  <goal>install-node-and-npm</goal>
+              </goals>
+              <configuration>
+                  <nodeVersion>v12.14.0</nodeVersion>
+                  <npmVersion>6.13.4</npmVersion>
+              </configuration>
+          </execution>
+          <execution>
+              <id>npm install</id>
+              <goals>
+                  <goal>npm</goal>
+              </goals>
+              <configuration>
+                  <arguments>install</arguments>
+              </configuration>
+          </execution>
+          <execution>
+              <id>webpack build</id>
+              <goals>
+                  <goal>webpack</goal>
+              </goals>
+          </execution>
+      </executions>
   </plugin>
   ```
 
-- **Webpack and `package.json`:** The same `package.json` configurations were applied to facilitate npm scripts for building and cleaning the frontend.
+#### Copy the generated jar file to the target directory
+- Add the maven-copy-resources plugin to copy the JAR file to the pom.xml file.
+
+  ```xml
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+            <execution>
+                <id>copy-jar</id>
+                <phase>package</phase>
+                <goals>
+                    <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                    <outputDirectory>${project.basedir}/dist</outputDirectory>
+                    <resources>
+                         <resource>
+                            <directory>${project.build.directory}</directory>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                         </resource>
+                    </resources>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+  ```
+  
+#### Clean Up Frontend Assets
+- Use Maven to clean frontend assets before the project clean task. Add maven-clean-plugin to the pom.xml file.
+
+  ```xml
+    <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+            <version>3.1.0</version>
+            <configuration>
+                <filesets>
+                    <fileset>
+                        <directory>${project.basedir}/src/main/resources/static/built</directory>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </fileset>
+                </filesets>
+            </configuration>
+    </plugin>
+  ```
+
 #### Build with Maven
-  - Run `mvn clean install` to build both the Java and frontend assets.
+- Run `mvn clean install` to build both the Java and frontend assets.
 
-      ```bash
-      mvn clean install
-    ```
-
+    ```bash
+    mvn clean install
+  ```
 
 #### Launch the Application
 - Run your Spring Boot application using Maven:
@@ -252,62 +281,6 @@ Add the frontend-maven-plugin to your POM.xml for frontend integration.
   ```bash
   mvn spring-boot:run
   ```
-
-#### Copy the generated jar file to the target directory
-- Add the Maven copy-resources plugin to copy the JAR file to the dist directory.
-
-  ```xml
-    <plugin>
-      <artifactId>maven-resources-plugin</artifactId>
-      <executions>
-          <execution>
-              <id>copy-resources</id>
-              <phase>install</phase>
-              <goals>
-                  <goal>copy-resources</goal>
-              </goals>
-              <configuration>
-                  <outputDirectory>${project.build.directory}/dist</outputDirectory>
-                  <resources>
-                      <resource>
-                          <directory>${project.build.directory}</directory>
-                          <includes>
-                              <include>*.jar</include>
-                          </includes>
-                      </resource>
-                  </resources>
-              </configuration>
-          </execution>
-      </executions>
-  </plugin>
-  ```
-  
-#### Clean Up Frontend Assets
-- Use Maven to clean frontend assets before the project clean task.
-
-  ```xml
-    <plugin>
-    <artifactId>maven-clean-plugin</artifactId>
-    <executions>
-      <execution>
-        <id>clean-webpack</id>
-        <phase>clean</phase>
-        <goals>
-          <goal>clean</goal>
-        </goals>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>src/main/resources/static/built/</directory>
-            </fileset>
-          </filesets>
-        </configuration>
-      </execution>
-    </executions>
-  </plugin>
-  
-  ```
-
 
 ### Comparison: Maven vs. Gradle
 
