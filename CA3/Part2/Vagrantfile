@@ -1,25 +1,26 @@
 # See: https://manski.net/2016/09/vagrant-multi-machine-tutorial/
 # for information about machine names on private network
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
+  config.ssh.insert_key = false
 
   # This provision is common for both VMs
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update -y
     sudo apt-get install -y iputils-ping avahi-daemon libnss-mdns unzip \
-        openjdk-11-jdk-headless
+        openjdk-17-jdk-headless
     # ifconfig
   SHELL
 
   #============
   # Configurations specific to the database VM
   config.vm.define "db" do |db|
-    db.vm.box = "ubuntu/bionic64"
+    db.vm.box = "ubuntu/focal64"
     db.vm.hostname = "db"
     db.vm.network "private_network", ip: "192.168.56.11"
 
     # We want to access H2 console from the host using port 8082
-    # We want to connet to the H2 server using port 9092
+    # We want to connect to the H2 server using port 9092
     db.vm.network "forwarded_port", guest: 8082, host: 8082
     db.vm.network "forwarded_port", guest: 9092, host: 9092
 
@@ -29,7 +30,7 @@ Vagrant.configure("2") do |config|
     SHELL
 
     # The following provision shell will run ALWAYS so that we can execute the H2 server process
-    # This could be done in a different way, for instance, setiing H2 as as service, like in the following link:
+    # This could be done in a different way, for instance, setting H2 as as service, like in the following link:
     # How to setup java as a service in ubuntu: http://www.jcgonzalez.com/ubuntu-16-java-service-wrapper-example
     #
     # To connect to H2 use: jdbc:h2:tcp://192.168.33.11:9092/./jpadb
@@ -41,11 +42,11 @@ Vagrant.configure("2") do |config|
   #============
   # Configurations specific to the webserver VM
   config.vm.define "web" do |web|
-    web.vm.box = "ubuntu/bionic64"
+    web.vm.box = "ubuntu/focal64"
     web.vm.hostname = "web"
     web.vm.network "private_network", ip: "192.168.56.10"
 
-    # We set more ram memmory for this VM
+    # We set more ram memory for this VM
     web.vm.provider "virtualbox" do |v|
       v.memory = 1024
     end
@@ -64,12 +65,13 @@ Vagrant.configure("2") do |config|
       # uncomment tomcat-users and add manager-gui to tomcat user
 
       # Change the following command to clone your own repository!
-      git clone https://bitbucket.org/pssmatos/tut-basic-gradle.git
-      cd tut-basic-gradle
+      git clone https://github.com/AnaSilvaSwitch/DevOps-23-24-JPE-1231821.git
+      cd DevOps-23-24-JPE-1231821/CA2/Part2
       chmod u+x gradlew
       ./gradlew clean build
+      nohup ./gradlew bootRun > /home/vagrant/spring-boot-app.log 2>&1 &
       # To deploy the war file to tomcat9 do the following command:
-      sudo cp ./build/libs/basic-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps
+      # sudo cp ./build/libs/basic-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps
     SHELL
   end
 end
