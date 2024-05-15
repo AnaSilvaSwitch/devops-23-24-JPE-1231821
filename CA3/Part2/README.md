@@ -167,7 +167,7 @@ To use VMware with Vagrant, we need to update the Vagrantfile to specify the pro
       v.vmx["numvcpus"] = "2"   # Number of CPUs / Adjust as needed
     end
     
-    config.vm.box = "ubuntu/focal64"
+    config.vm.box = "hashicorp/bionic64"
     config.ssh.insert_key = false
     
     # This provision is common for both VMs
@@ -186,7 +186,7 @@ To use VMware with Vagrant, we need to update the Vagrantfile to specify the pro
             v.vmx["numvcpus"] = "1"   # Number of CPUs / Adjust as needed
          end
 
-         db.vm.box = "ubuntu/focal64"
+         db.vm.box = "hashicorp/bionic64"
          db.vm.hostname = "db"
          db.vm.network "private_network", ip: "192.168.56.11"
 
@@ -218,7 +218,7 @@ To use VMware with Vagrant, we need to update the Vagrantfile to specify the pro
             v.vmx["numvcpus"] = "2"   # Number of CPUs / Adjust as needed
          end
 
-         web.vm.box = "ubuntu/focal64"
+         web.vm.box = "hashicorp/bionic64"
          web.vm.hostname = "web"
          web.vm.network "private_network", ip: "192.168.56.10"
 
@@ -248,7 +248,7 @@ To use VMware with Vagrant, we need to update the Vagrantfile to specify the pro
     end
     ```
 ### 4.4 Running the VM's with VMware
-To create and provision the virtual machines using VMware, you can use the `vagrant up --provider=vmware_workstation` command.
+To create and provision the virtual machines using VMware, we can use the `vagrant up --provider=vmware_workstation` command.
 
 ```bash
 vagrant up --provider=vmware_workstation
@@ -284,7 +284,7 @@ platform for their needs. In this assignment, we explored the use of VirtualBox 
 demonstrating the flexibility and versatility of the tool.
 
 In conclusion, Vagrant is a versatile tool that simplifies the process of creating and managing virtual environments.
-Whether you're using VirtualBox or VMware, Vagrant provides a consistent and automated way to set up development
+Whether we're using VirtualBox or VMware, Vagrant provides a consistent and automated way to set up development
 environments, making it easier to collaborate, test, and deploy applications.
 
 
