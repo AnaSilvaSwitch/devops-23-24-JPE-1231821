@@ -1,0 +1,17 @@
+FROM openjdk:17-jdk-slim
+
+LABEL author="Ana Silva"
+
+WORKDIR /app
+
+COPY . /app
+
+RUN apt-get update && apt-get install -y dos2unix
+
+RUN dos2unix ./gradlew
+
+RUN chmod +x gradlew
+
+EXPOSE 59001
+
+CMD ["./gradlew", "runServer"]

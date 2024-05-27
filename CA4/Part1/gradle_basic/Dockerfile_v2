@@ -1,0 +1,11 @@
+FROM openjdk:21-jdk-slim
+
+LABEL author="Ana Silva"
+
+WORKDIR /ca4-part1
+
+COPY build/libs/basic_demo-0.1.0.jar /ca4-part1/ca4-part1.jar
+
+EXPOSE 59001
+
+ENTRYPOINT ["java", "-cp", "/ca4-part1/ca4-part1.jar", "basic_demo.ChatServerApp", "59001"]
