@@ -1,10 +1,10 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 LABEL author="Ana Silva"
 
-WORKDIR /app
+WORKDIR /ca4-part1
 
-COPY . /app
+COPY . /ca4-part1
 
 RUN apt-get update && apt-get install -y dos2unix
 
