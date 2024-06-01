@@ -1,4 +1,4 @@
-# Technical Report for CA4-Part1: Virtualization with Vagrant
+# Technical Report for CA4-Part1: Containers with Docker
 
 ## Table of Contents
 
@@ -8,7 +8,7 @@
     - [1.2. Version 2](#12-version-2)
 - [2. Publish the image in the Docker Hub](#2-publish-the-image-in-the-docker-hub)
     - [2.1 Clone the repository](#21-clone-the-repository)
-        - [2.3.1. Run CA1 project](#231-run-ca1-project)
+        - [2.3.1. Run CA4 project](#231-run-ca4-project)
 - [3. Version Control and Documentation](#3-version-control-and-documentation)
 - [Conclusion](#conclusion)
 
@@ -65,9 +65,17 @@ docker build -f Dockerfile_v1 -t chatserver_ca4_part1_v1 .
 
 docker run -p 59001:59001 chatserver_ca4_part1_v1 
 ```
+
+<img src="images/docker_runServer_chat.png" alt="docker runServer chat" style="width: 70%; height: auto;">
+
 ```bash
 ./gradlew runClient
 ```
+
+<img src="images/Docker_run_chat _2_clients.png" alt="docker run client" style="width: 70%; height: auto;">
+
+<img src="images/Chat_image.png" alt="chat image" style="width: 70%; height: auto;">
+
 
 ### 1.2. Version 2
 Set the base image for Docker container. It specifies that the container will be built using OpenJDK 21 as the operating
@@ -123,6 +131,8 @@ following steps outline the process:
 docker login
 ```
 
+<img src="images/docker_login.png" alt="docker login" style="width: 70%; height: auto;">
+
 * Tag the Docker image with the repository name with the following command:
 ```bash
 docker tag chatserver_ca4_part1_v1 anasilvaswitch/chatserver_ca4_part1_v1
@@ -133,10 +143,15 @@ docker tag chatserver_ca4_part1_v2 anasilvaswitch/chatserver_ca4_part1_v2
 ```bash
 docker push anasilvaswitch/chatserver_ca4_part1_v1
 docker push anasilvaswitch/chatserver_ca4_part1_v2
-
 ```
+
+<img src="images/docker_push_v1.png" alt="docker push v1" style="width: 70%; height: auto;">
+
+
+<img src="images/docker_hub_images_part1.png" alt="docker hub images" style="width: 70%; height: auto;">
+
 * Verify that the images have been successfully pushed to Docker Hub by checking the repository on the Docker Hub website here:
-https://hub.docker.com/repository/docker/anasilvaswitch/chatserver_ca4_part1_v1 and https://hub.docker.com/repository/docker/anasilvaswitch/chatserver_ca4_part1_v2
+https://hub.docker.com/repository/docker/anasilvaswitch
 
 ### 3. Version control and Documentation
 
