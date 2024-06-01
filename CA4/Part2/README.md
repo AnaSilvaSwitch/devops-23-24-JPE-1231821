@@ -1,4 +1,4 @@
-# Technical Report for CA4 Part 2: Build Tools with Gradle
+# Technical Report for CA4 Part 2:  Containers with Docker
 
 ## Table of Contents
 
@@ -103,7 +103,7 @@ EXPOSE 9092
 CMD ["java", "-cp", "h2.jar", "org.h2.tools.Server", "-ifNotExists", "-web", "-webAllowOthers", "-webPort", "8082", "-tcp", "-tcpAllowOthers", "-tcpPort", "9092"]
 ```
 
-### Docker compose file
+### 1.3. Docker compose file
 
 In this file, we define the services that will be used in the project. The web service will be built using the 
 `Dockerfile_web` and the db service will be built using the `Dockerfile_db`. The web service will be available on port 
@@ -169,16 +169,11 @@ You can access the pages in the following links:
 
 Some screenshots of the result:
 
-[//]: # (![docker compose webUI]&#40;./images/docker_compose_webUI.png&#41;)
 <img src="./images/docker_compose_webUI.png" alt="docker compose webUI" style="width: 70%; height: auto;">
-
-[//]: # (![docker compose DB]&#40;./images/docker_compose_db.png&#41;)
 
 <img src="./images/docker_compose_db.png" alt="docker compose webUI" style="width: 70%; height: auto;">
 
 Login in to the DB with the default password:
-
-[//]: # (![db login]&#40;./images/db_login.png&#41;)
 
 <img src="./images/db_login.png" alt="docker compose webUI" style="width: 70%; height: auto;">
 
