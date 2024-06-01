@@ -1,0 +1,19 @@
+FROM gradle:jdk21 as builder
+
+LABEL authors="Ana Silva"
+
+WORKDIR /app
+
+COPY . /app
+
+RUN gradle build
+
+FROM openjdk:21
+
+WORKDIR /app
+
+COPY --from=builder /app/build/libs/*.jar /app
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "/app/react-and-spring-data-rest-basic-0.0.1-SNAPSHOT.jar"]
