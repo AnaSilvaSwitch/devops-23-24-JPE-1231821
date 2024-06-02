@@ -14,12 +14,11 @@
 
 
 ## Introduction
-The goal of this assignment is to utilize Docker for setting up a containerized environment to execute the Gradle 
+The goal of this assignment is to use Docker for setting up a containerized environment to execute the Gradle 
 version of the Spring basic tutorial application. By creating a Docker-based solution, we aim to encapsulate the 
 application and its dependencies into containers, ensuring consistent and isolated execution environments. The assignment
 involves creating Dockerfiles for the web and database services, using Docker Compose to manage the services, and publishing
 the Docker images to Docker Hub.
-
 
 
 ## 1.  Create the docker containers
@@ -36,7 +35,7 @@ is required to run the Java application.
 The path /app/build/libs/*.jar points to where the JAR file(s) were created in the first stage, and they are copied to 
 /app in the second stage.
 * Expose the port 8080.
-/ Specify the command to run when the container starts. It runs the Java application by executing java -jar and specifying 
+* Specify the command to run when the container starts. It runs the Java application by executing java -jar and specifying 
 the path to the JAR file (/app/react-and-spring-data-rest-basic-0.0.1-SNAPSHOT.jar).
 
 ```Dockerfile
@@ -161,21 +160,22 @@ It should run the docker compose file and build the images. To check the images,
 ```bash
 docker compose images
 ```
-![docker compose images](./images/docker_compose_images.png)
 
-You can access the pages in the following links:
+<img src="./images/docker_compose_images.png" alt="docker_compose_images" style="width: 70%; height: auto;">
+
+### We can access the pages in the following links:
 * Web UI: http://localhost:8080
 * DB: http://localhost:8082
 
 Some screenshots of the result:
 
-<img src="./images/docker_compose_webUI.png" alt="docker compose webUI" style="width: 70%; height: auto;">
+<img src="./images/docker_compose_webUI.png" alt="docker compose webUI" style="width: 60%; height: auto;">
 
-<img src="./images/docker_compose_db.png" alt="docker compose webUI" style="width: 70%; height: auto;">
+<img src="./images/docker_compose_db.png" alt="docker compose webUI" style="width: 60%; height: auto;">
 
 Login in to the DB with the default password:
 
-<img src="./images/db_login.png" alt="docker compose webUI" style="width: 70%; height: auto;">
+<img src="./images/db_login.png" alt="docker compose webUI" style="width: 60%; height: auto;">
 
 Push the changes to the repository:
 ```bash
@@ -202,17 +202,17 @@ docker tag d37fc309b93e  anasilvaswitch/web_ca4_part2
 docker tag b514349cb716 anasilvaswitch/db_ca4_part2
 ```
 
-<img src="./images/docker tag part2.png" alt="docker tag part 2" style="width: 70%; height: auto;">
+<img src="./images/docker tag part2.png" alt="docker tag part 2" style="width: 50%; height: auto;">
 
-*Push the Docker image to the repository on Docker Hub with the following command:
+* Push the Docker image to the repository on Docker Hub with the following command:
 ```bash
 docker push anasilvaswitch/web_ca4_part2
 docker push anasilvaswitch/db_ca4_part2
 ```
 
-<img src="./images/docker hub images.png" alt="docker hub images" style="width: 70%; height: auto;">
+<img src="./images/docker hub images.png" alt="docker hub images" style="width: 50%; height: auto;">
 
-*Verify that the images have been successfully pushed to Docker Hub by checking the repository on the Docker Hub website here:
+* Verify that the images have been successfully pushed to Docker Hub by checking the repository on the Docker Hub website here:
 https://hub.docker.com/repository/docker/anasilvaswitch/
 
 
@@ -238,7 +238,7 @@ application and an H2 server database. This setup not only simplifies the deploy
 across different environments.
 
 The Docker images for the web and db services were published to Docker Hub, facilitating easy distribution and deployment. 
-Additionally, we utilized Docker volumes to manage database persistence and demonstrated how to interact with the database 
+Additionally, we used Docker volumes to manage database persistence and demonstrated how to interact with the database 
 container to copy data files.
 
 By completing this assignment, we have reinforced the importance of containerization in modern software development and 
