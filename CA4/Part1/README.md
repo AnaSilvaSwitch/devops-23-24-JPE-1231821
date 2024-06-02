@@ -66,7 +66,9 @@ docker build -f Dockerfile_v1 -t chatserver_ca4_part1_v1 .
 docker run -p 59001:59001 chatserver_ca4_part1_v1 
 ```
 
-<img src="images/docker_runServer_chat.png" alt="docker runServer chat" style="width: 50%; height: auto;">
+<img src="images/Docker_runServer_chat.png" alt="docker runServer chat" style="width: 70%; height: auto;">
+
+Run the client in the host machine:
 
 ```bash
 ./gradlew runClient
@@ -146,7 +148,7 @@ docker push anasilvaswitch/chatserver_ca4_part1_v1
 docker push anasilvaswitch/chatserver_ca4_part1_v2
 ```
 
-<img src="images/docker_push_v1.png" alt="docker push v1" style="width: 70%; height: auto;">
+<img src="images/Docker_push_v1.png" alt="docker push v1" style="width: 70%; height: auto;">
 
 
 <img src="images/docker_hub_images_part1.png" alt="docker hub images" style="width: 50%; height: auto;">
