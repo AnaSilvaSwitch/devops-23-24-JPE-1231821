@@ -27,24 +27,24 @@ packaging applications within Docker images:
  * Version 2: Build the chat server on the host machine and then copy the JAR file into the Docker image.
 
 ### 1.1. Version 1
-Set the base image for Docker container. It specifies that the container will be built using OpenJDK 17 as the operating
+* Set the base image for Docker container. It specifies that the container will be built using OpenJDK 17 as the operating
 system.
-Set the working directory for the container to /app. Any subsequent COPY, ADD, RUN, and other commands will be executed
+* Set the working directory for the container to /ca4-part1. Any subsequent COPY, ADD, RUN, and other commands will be executed
 relative to this directory.
-Copy the entire project directory from the host machine into the Docker image.
-Install dos2unix package to ensure that the gradlew script is executable within the container.
-Change the permissions of the gradlew script to make it executable.
-Expose the chat server port to the host machine.
-Run the chat server when the container starts.
+* Copy the entire project directory from the host machine into the Docker image.
+* Install dos2unix package to ensure that the gradlew script is executable within the container.
+* Change the permissions of the gradlew script to make it executable.
+* Expose the chat server port to the host machine.
+* Run the chat server when the container starts.
 
 ```Dockerfile
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 LABEL author="Ana Silva"
 
-WORKDIR /app
+WORKDIR /ca4-part1
 
-COPY . /app
+COPY . /ca4-part1
 
 RUN apt-get update && apt-get install -y dos2unix
 
@@ -66,7 +66,7 @@ docker build -f Dockerfile_v1 -t chatserver_ca4_part1_v1 .
 docker run -p 59001:59001 chatserver_ca4_part1_v1 
 ```
 
-<img src="images/docker_runServer_chat.png" alt="docker runServer chat" style="width: 70%; height: auto;">
+<img src="images/docker_runServer_chat.png" alt="docker runServer chat" style="width: 50%; height: auto;">
 
 ```bash
 ./gradlew runClient
@@ -74,17 +74,17 @@ docker run -p 59001:59001 chatserver_ca4_part1_v1
 
 <img src="images/Docker_run_chat _2_clients.png" alt="docker run client" style="width: 70%; height: auto;">
 
-<img src="images/Chat_image.png" alt="chat image" style="width: 70%; height: auto;">
+<img src="images/Chat_image.png" alt="chat image" style="width: 50%; height: auto;">
 
 
 ### 1.2. Version 2
-Set the base image for Docker container. It specifies that the container will be built using OpenJDK 21 as the operating
+* Set the base image for Docker container. It specifies that the container will be built using OpenJDK 21 as the operating
 system.
-Set the working directory for the container to /ca4-part1. Any subsequent COPY, ADD, RUN, and other commands will be
+* Set the working directory for the container to /ca4-part1. Any subsequent COPY, ADD, RUN, and other commands will be
 executed relative to this directory.
-Copy the pre-built JAR file from the host machine into the Docker image.
-Expose the chat server port to the host machine.
-Run the chat server when the container starts.
+* Copy the pre-built JAR file from the host machine into the Docker image.
+* Expose the chat server port to the host machine.
+* Run the chat server when the container starts.
 
 ```Dockerfile
 FROM openjdk:21-jdk-slim
@@ -109,6 +109,7 @@ docker build -f Dockerfile_v2 -t chatserver_ca4_part1_v2 .
 docker run -p 59001:59001 chatserver_ca4_part1_v2
 ```
 
+Run the client in the host machine:
 ```bash
 ./gradlew runClient
 ```
@@ -131,7 +132,7 @@ following steps outline the process:
 docker login
 ```
 
-<img src="images/docker_login.png" alt="docker login" style="width: 70%; height: auto;">
+<img src="images/docker_login.png" alt="docker login" style="width: 50%; height: auto;">
 
 * Tag the Docker image with the repository name with the following command:
 ```bash
@@ -148,7 +149,7 @@ docker push anasilvaswitch/chatserver_ca4_part1_v2
 <img src="images/docker_push_v1.png" alt="docker push v1" style="width: 70%; height: auto;">
 
 
-<img src="images/docker_hub_images_part1.png" alt="docker hub images" style="width: 70%; height: auto;">
+<img src="images/docker_hub_images_part1.png" alt="docker hub images" style="width: 50%; height: auto;">
 
 * Verify that the images have been successfully pushed to Docker Hub by checking the repository on the Docker Hub website here:
 https://hub.docker.com/repository/docker/anasilvaswitch
