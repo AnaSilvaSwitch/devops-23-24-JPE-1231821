@@ -20,6 +20,7 @@ services:
       - "9092:9092"
     volumes:
       - ./data:/opt/h2-data
+      - db-backup:/backup
     networks:
       default:
         ipv4_address: 192.168.56.11
@@ -29,3 +30,9 @@ networks:
       driver: default
       config:
         - subnet: 192.168.56.0/24
+
+volumes:
+  h2-data:
+    driver: local
+  db-backup:
+    driver: local
