@@ -9,7 +9,9 @@
   - [1.3. Docker compose file](#13-yml-file)
   - [1.4. Run the docker-compose](#14-run-the-docker-compose)
 - [2. Publish the image in the Docker Hub](#2-publish-the-image-in-the-docker-hub)
-- [3. Version Control and Documentation](#3-version-control-and-documentation)
+- [3. Copying the database using Volumes](#3-copying-the-database-using-volumes)
+- [4. Version Control and Documentation](#4-version-control-and-documentation)
+- [Exploring Kubernets](#exploring-kubernets)
 - [Conclusion](#conclusion)
 
 
@@ -216,7 +218,64 @@ docker push anasilvaswitch/db_ca4_part2
 https://hub.docker.com/repository/docker/anasilvaswitch/
 
 
-## 3. Version Control and Documentation
+## 3. Copying the database using Volumes
+
+I updated the docker-compose file to include a volume for the db service. The volume is mounted to the ./data directory
+on the host machine, which allows the data in the H2 database to persist across container restarts. The volume is defined
+as db-backup and uses the local driver to store the data on the host machine.
+
+```Dockerfile
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile_web
+    ports:
+      - "8080:8080"
+    networks:
+      default:
+        ipv4_address: 192.168.56.10
+    depends_on:
+      - "db"
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile_db
+    ports:
+      - "8082:8082"
+      - "9092:9092"
+    volumes:
+      - ./data:/opt/h2-data
+      - db-backup:/backup
+    networks:
+      default:
+        ipv4_address: 192.168.56.11
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.56.0/24
+
+volumes:
+  h2-data:
+    driver: local
+  db-backup:
+    driver: local
+```
+* Check the volumes using the following command:
+```bash
+docker volume ls
+docker volume inspect part2_db-backup
+
+```
+<img src="./images/docker_volume.png" alt="docker volume" style="width: 20%; height: auto;">
+<p></p>
+<img src="./images/docker_volume_inspect.png" alt="docker volume inspect" style="width: 50%; height: auto;">
+
+
+## 4. Version Control and Documentation
 
 * Commit your changes and push them to your repository.
 ```bash
@@ -231,7 +290,57 @@ git push origin main
     
   ```
 
-### Conclusion
+## Exploring kubernets
+
+Kubernetes, often abbreviated as K8s, is an open-source platform designed to automate deploying, scaling, and operating 
+containerized applications. It handles scaling and failover for applications, provides deployment patterns, and can 
+manage the lifecycle of containerized applications.
+
+### Key Features of Kubernetes
+* **Automated Scheduling**: Kubernetes can automatically place containers based on resource requirements and constraints.
+* **Self-Healing**: Kubernetes can automatically restart containers that fail, replace and reschedule containers when nodes
+* **Horizontal Scaling**: Kubernetes can scale applications based on CPU usage or other custom metrics.
+* **Service Discovery and Load Balancing**: Kubernetes can manage a DNS server for containers and balance traffic across
+* **Automated Rollouts and Rollbacks**: Kubernetes can manage the deployment of new versions of applications and roll back
+* **Secret and Configuration Management**: Kubernetes can manage sensitive information and configuration details for
+* **Storage Orchestration**: Kubernetes can automatically mount local, external, and storage solutions to the containers.
+* **Batch Execution**: Kubernetes can manage batch and CI workloads, replacing containers that fail, if desired.
+
+### Differences Between Docker and Kubernetes
+* **Scope**: Docker is a platform and tool for building, distributing, and running Docker containers, while Kubernetes is a 
+platform for managing clusters of containers.
+* **Container Orchestration**: Docker includes Docker Swarm for native clustering, whereas Kubernetes is a full-fledged 
+container orchestration system with advanced features for managing large-scale container deployments.
+* **Service Discovery and Load Balancing**: Kubernetes has built-in service discovery and load balancing. Docker Swarm 
+requires additional configuration for these services.
+* **Scaling**: Kubernetes provides robust mechanisms for auto-scaling applications based on resource utilization or custom 
+metrics. Docker Swarm has more basic scaling features.
+* **Configuration Management**: Kubernetes allows for managing application configurations and secrets natively with 
+ConfigMaps and Secrets. Docker does not have an equivalent feature without third-party tools.
+
+### Command Differences
+**Building Images**
+* Docker: docker build -t <image_name>:<tag> - Builds a Docker image from a Dockerfile in the current directory.
+* Kubernetes: Kubernetes does not have a direct command for building images. You build images with Docker or another
+container tool and then use them in Kubernetes.
+
+**Running Containers**
+* Docker: docker run -d -p <host_port>:<container_port> --name <container_name> <image_name>:<tag> - Runs a Docker 
+container from an image, mapping ports and naming the container.
+* Kubernetes: kubectl apply -f <deployment_file>.yaml - Deploys containers using a deployment configuration file.
+
+**Stopping and Removing Containers**
+* Docker: docker stop <container_name> - Stops a running container.
+          docker rm <container_name> - Removes a stopped container.
+* Kubernetes: kubectl delete pod <pod_name> - Deletes a running pod (Kubernetes will often recreate it if it's managed 
+by a deployment).
+
+**Service Management**
+* Docker: docker-compose up -d - Starts services defined in a Docker Compose file.
+* Kubernetes: kubectl apply -f <service_file>.yaml - Creates or updates services defined in a YAML file.
+
+
+## Conclusion
 
 By implementing Docker Compose, we created a multi-container setup consisting of a Tomcat server for the Spring 
 application and an H2 server database. This setup not only simplifies the deployment process but also ensures consistency 
