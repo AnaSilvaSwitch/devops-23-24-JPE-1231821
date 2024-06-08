@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking Out'
+                script {
+                    git branch: 'main',
+                        url: 'https://github.com/anasilvaswitch/devops-23-24-JPE-1231821.git'
+                }
+            }
+        }
+        stage('Assemble') {
+            steps {
+                dir('./CA2/Part1/gradle_basic') {
+                    echo 'Assembling'
+                    sh './gradlew assemble'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                dir('./CA2/Part1/gradle_basic') {
+                    echo 'Testing'
+                    sh './gradlew test'
+                }
+            }
+            post {
+                always {
+                    junit '**/build/test-results/**/*.xml'
+                }
+            }
+        }
+        stage('Archive') {
+            steps {
+                echo 'Archiving...'
+                archiveArtifacts artifacts: 'CA2/Part1/gradle_basic/build/**/*.jar', onlyIfSuccessful: true
+            }
+        }
+    }
+}
