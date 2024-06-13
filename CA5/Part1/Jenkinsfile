@@ -10,15 +10,6 @@ pipeline {
                 }
             }
         }
-         stage('Prepare Environment') {
-             steps {
-                dir('./CA2/Part1/gradle_basic') {
-                    echo 'Preparing Environment'
-                    sh 'dos2unix ./gradlew' // Convert gradlew to Unix format
-                    sh 'chmod +x ./gradlew' // Make gradlew executable
-                }
-             }
-         }
         stage('Assemble') {
             steps {
                 dir('./CA2/Part1/gradle_basic') {
