@@ -12,9 +12,8 @@ pipeline {
         }
         stage('Assemble') {
             steps {
-                dir('./CA2/Part1/gradle_basic') {
                     echo 'Assembling'
-                    sh 'dos2unix ./gradlew'
+                dir('./CA2/Part1/gradle_basic') {
                     sh 'chmod +x ./gradlew'
                     sh './gradlew assemble'
                 }
