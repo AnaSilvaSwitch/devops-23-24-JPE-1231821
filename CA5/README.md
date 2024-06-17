@@ -6,41 +6,34 @@
 - [1. Installing Jenkins](#1-installing-jenkins)
 - [2. CA5 - Part1](#2-ca5---part1)
 - [3. CA5 - Part2](#3-ca5--part2)
+- [4. Version control and Documentation](#4-version-control-and-documentation)
 - [Conclusion](#conclusion)
 
 
 ## Introduction
 The goal of this assignment is to practice using Jenkins with the "Gradle Basic Demo" project, in particular, 
-CA2/Part1/gradle_basic_demo and CA2/Part2 directories. This project is already present in the individual repository. 
+CA2/Part1/gradle_basic and CA2/Part2 directories. This project is already present in the individual repository. 
 The task involves creating a simple Jenkins pipeline similar to the example from the lectures. The pipeline script is 
 design to automate several stages of a Gradle project.
-
 
 ## 1. Installing Jenkins
 I used a Docker container to install Jenkins. The following command was used to create the container:
 
 ```bash
-docker run -d -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home --name=jenkins
-jenkins/jenkins:lts-jdk17
+docker run -d -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home --name=jenkins jenkins/jenkins:lts-jdk17
 ```
 
-I also need to configure Jenkins authentication by obtaining the initial password from the container logs. The following
-command was used to retrieve the password:
-
-```bash
-docker logs jenkins
-```
+I also needed to configure Jenkins authentication by obtaining the initial password from the container logs.
 
 <img src="images/password_jenkins.png" alt="password" style="width: 60%; height: auto;">
 <p></p>
 <img src="images/main_page_jenkins.png" alt="main page" style="width: 60%; height: auto;">
 
 
-
 ## 2. CA5 - Part1
 
 For this part of the assignment, when configuring the pipeline, in the Script Path field, we should specify the relative
-path (inside your repository) for the Jenkinsfile:
+path (inside our repository) for the Jenkinsfile:
 * Select Pipeline Script on SCM
 * Choose Git
 * Add our repository and credentials (if needed)
@@ -49,7 +42,7 @@ path (inside your repository) for the Jenkinsfile:
 
 <img src="images/path_jenkins.png" alt="path" style="width: 60%; height: auto;">
 
-Jenkinsfile should include the following tasks: Checkout, Assemble, Test and Archive.
+**Jenkinsfile** should include the following tasks: Checkout, Assemble, Test and Archive.
 
 Jenkinsfile follows the groovy language:
 
@@ -105,11 +98,11 @@ Also, we can check the results of the test:
 
 <img src="images/test_result_part1.png" alt="test part1" style="width: 70%; height: auto;">
 
-## 2. CA5 - Part2
+## 3. CA5 - Part2
  For the second part of the assignment, we  should define the following stages in our pipeline:
  Checkout, Assemble, Test, Javadoc, Archive and Publish Image.
 
-For this, firstly we need to install some plugins
+For this, firstly we need to install some plugins:
 
 <img src="images/docker_pipeline_plugin.png" alt="docker plugin" style="width: 70%; height: auto;">
 
@@ -227,7 +220,9 @@ pipeline {
     }
 }
 ```
+Notice that, for the purpose of showing this file, I replaced the credential id with credential name.
 
+### Result
 After building the pipeline, we should see the result like this:
 
 <img src="images/successfull_build_part2_jenkins.png" alt="build part2" style="width: 70%; height: auto;">
@@ -245,9 +240,24 @@ As it also can be seen in the Docker Hub:
 <img src="images/javadoc.png" alt="javadoc" style="width: 40%; height: auto;">
 
 
+### 4. Version control and Documentation
+
+* Commit changes and push them to our repository.
+```bash
+git add .
+git commit -m "[DOCS] #31 Created technical report and added images"
+git push origin main
+```
+
+* Tag the final submission:
+```
+git tag -a ca5
+git push origin --tags
+```
 
 ## Conclusion
 By following the steps outlined in this report, we can successfully set up and configure a Jenkins pipeline for our 
 Gradle basic demo project. This continuous integration setup ensures that our project is consistently built, tested, and 
 archived, enhancing the overall development workflow and maintaining high-quality standards.
+It also gives us hands-on experience with Jenkins, a popular open-source automation server, boosting our CI/CD expertise.
 
